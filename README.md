@@ -1,101 +1,152 @@
-# Pot-App 翻译插件模板仓库 (以 [Lingva](https://github.com/TheDavidDelta/lingva-translate) 为例)
+# Pot-App OpenAI Translation Plugin
 
-### 此仓库为模板仓库，编写插件时可以直接由此仓库创建插件仓库
+[English](README.md) | [简体中文](README_CN.md)
 
-## 插件编写指南
+This is an OpenAI translation plugin for [Pot-App](https://pot-app.com/), supporting multiple OpenAI models with API key storage and model selection.
 
-### 1. 插件仓库创建
+## Features
 
-- 以此仓库为模板创建一个新的仓库
-- 仓库名为 `pot-app-translate-plugin-<插件名>`，例如 `pot-app-translate-plugin-lingva`
+- **Multiple Model Support**: Choose from GPT-4o, GPT-4o Mini, GPT-4 Turbo, and GPT-3.5 Turbo
+- **Secure API Key Storage**: Store your OpenAI API key securely
+- **Custom API Endpoint**: Support for custom OpenAI-compatible API endpoints
+- **Streaming Translation**: Real-time streaming of translation results for better user experience
+- **Extensive Language Support**: Support for 40+ languages
 
-### 2. 插件信息配置
+## Installation
 
-编辑 `info.json` 文件，修改以下字段：
+### Method 1: Download from Release
 
-- `id`：插件唯一 id，必须以`plugin`开头，例如 `plugin.com.pot-app.lingva`
-- `homepage`: 插件主页，填写你的仓库地址即可，例如 `https://github.com/pot-app/pot-app-translate-plugin-template`
-- `display`: 插件显示名称，例如 `Lingva`
-- `icon`: 插件图标，例如 `lingva.svg`
-- `needs`: 插件依赖，一个数组，每个依赖为一个对象，包含以下字段：
-  - `key`: 依赖 key，对应该项依赖在配置文件中的名称，例如 `requestPath`
-  - `display`: 依赖显示名称，对应用户显示的名称，例如 `请求地址`
-  - `type`: 组件类型 `input` | `select`
-  - `options`: 选项列表(仅 select 组件需要)，例如 `{"engine_a":"Engina A","engine_b":"Engina B"}`
-- `language`: 插件支持的语言映射，将 pot 的语言代码和插件发送请求时的语言代码一一对应
+1. Go to the [Releases](https://github.com/WonderMr/pot-app-translate-openai/releases) page
+2. Download the latest `plugin.com.pot-app.openai.potext` file
+3. Open Pot-App, go to Settings → Plugin → Install
+4. Select the downloaded `.potext` file
 
-### 3. 插件编写
+### Method 2: Manual Build
 
-编辑 `main.js` 实现 `translate` 函数
+1. Clone this repository
+2. Run the following command to build:
+   ```bash
+   zip -r plugin.com.pot-app.openai.potext info.json main.js lingva.svg
+   ```
+3. Install the generated `.potext` file in Pot-App
 
-#### 输入参数
+## Configuration
 
-```javascript
-// config: config map
-// detect: detected source language
-// setResult: function to set result text
-// utils: some tools
-//     http: tauri http module
-//     readBinaryFile: function
-//     readTextFile: function
-//     Database: tauri Database class
-//     CryptoJS: CryptoJS module
-//     cacheDir: cache dir path
-//     pluginDir: current plugin dir 
-//     osType: "Windows_NT" | "Darwin" | "Linux"
-async function translate(text, from, to, options) {
-  const { config, detect, setResult, utils } = options;
-  const { http, readBinaryFile, readTextFile, Database, CryptoJS, run, cacheDir, pluginDir, osType } = utils;
-  const { fetch, Body } = http;
-}
+After installation, configure the plugin with the following settings:
+
+1. **API Key** (Required): Your OpenAI API key
+   - Get your API key from [OpenAI Platform](https://platform.openai.com/api-keys)
+   - The key is stored securely (password field)
+
+2. **Model** (Required): Select the OpenAI model to use
+   - `GPT-4o`: Latest and most capable model
+   - `GPT-4o Mini`: Cost-effective mini version of GPT-4o
+   - `GPT-4 Turbo`: High-performance GPT-4 model
+   - `GPT-3.5 Turbo`: Fast and economical option (default)
+
+3. **API Endpoint** (Optional): Custom API endpoint
+   - Default: `https://api.openai.com`
+   - Use this if you have a custom OpenAI-compatible API endpoint
+
+## Supported Languages
+
+The plugin supports translation between the following languages:
+
+- Chinese (Simplified & Traditional)
+- English
+- Japanese
+- Korean
+- French
+- Spanish
+- Russian
+- German
+- Italian
+- Turkish
+- Portuguese (Portugal & Brazil)
+- Vietnamese
+- Indonesian
+- Thai
+- Malay
+- Arabic
+- Hindi
+- Mongolian
+- Khmer
+- Norwegian
+- Persian
+- Dutch
+- Polish
+- Ukrainian
+- Czech
+- Swedish
+- Danish
+- Finnish
+- Romanian
+- Bulgarian
+- Greek
+- Hebrew
+- Hungarian
+- Slovak
+- Croatian
+
+## Usage
+
+1. Select text you want to translate
+2. Trigger Pot-App (default: Ctrl+Q on Windows/Linux, Cmd+Q on macOS)
+3. Choose OpenAI as the translation service
+4. View the streaming translation results
+
+## Development
+
+### Plugin Structure
+
+- `info.json`: Plugin configuration and metadata
+- `main.js`: Main translation logic
+- `lingva.svg`: Plugin icon
+
+### Building from Source
+
+```bash
+# Package the plugin
+zip -r plugin.com.pot-app.openai.potext info.json main.js lingva.svg
 ```
 
-#### 返回值
+### API Integration
 
-```javascript
-// 文本翻译直接返回字符串
-return "result";
-// 流式输出使用options中的setResult函数
-setResult("result");
-```
+The plugin uses OpenAI's Chat Completions API with streaming enabled for real-time translation display. The implementation:
 
-词典返回 json 示例：
+- Uses the `/v1/chat/completions` endpoint
+- Sends system and user messages for context
+- Processes streaming responses for immediate feedback
+- Handles errors gracefully with user-friendly messages
 
-```json
-{
-  "pronunciations": [
-    {
-      "region": "", // 地区
-      "symbol": "", // 音标
-      "voice": [u8] // 语音字节数组
-    }
-  ],
-  "explanations": [
-    {
-      "trait": "", // 词性
-      "explains": [""] // 释义
-    }
-  ],
-  "associations": [""], // 联想/变形
-  "sentence": [
-    {
-      "source": "", // 原文
-      "target": "" // 译文
-    }
-  ]
-}
-```
+## Troubleshooting
 
-### 4. 打包 pot 插件
+### API Key Error
+- Ensure your API key is correctly entered
+- Verify the API key is active and has available credits
+- Check if your API key has the necessary permissions
 
-1. 将 `main.js` 文件和 `info.json` 以及图标文件压缩为 zip 文件。
+### Connection Error
+- Check your internet connection
+- Verify the API endpoint is accessible
+- If using a custom endpoint, ensure it's OpenAI-compatible
 
-2. 将文件重命名为`<插件id>.potext`，例如`plugin.com.pot-app.lingva.potext`,即可得到 pot 需要的插件。
+### Translation Quality
+- Try different models (GPT-4o often provides better results)
+- Ensure the source and target languages are supported
+- Check if the text is too long (API has token limits)
 
-## 自动编译打包
+## License
 
-本仓库配置了 Github Actions，可以实现推送后自动编译打包插件。
+Apache-2.0 License
 
-每次将仓库推送到 GitHub 之后 actions 会自动运行，将打包好的插件上传到 artifact，在 actions 页面可以下载
+## Contributing
 
-每次提交 Tag 之后，actions 会自动运行，将打包好的插件上传到 release，在 release 页面可以下载打包好的插件
+Issues and pull requests are welcome!
+
+## Related Links
+
+- [Pot-App Official Website](https://pot-app.com/)
+- [Pot-App GitHub](https://github.com/pot-app/pot-desktop)
+- [OpenAI API Documentation](https://platform.openai.com/docs)
+- [Plugin Development Guide](https://pot-app.com/docs/plugin/api/translate.html)
