@@ -62,7 +62,7 @@ async function translate(text, from, to, options) {
     const targetLang = languageMap[to] || to;
     
     // Prepare the prompt
-    let systemPrompt = 'You are a professional translator. Translate the given text accurately and naturally.';
+    const systemPrompt = 'You are a professional translator. Translate the given text accurately and naturally.';
     let userPrompt;
     
     if (from === 'auto' || sourceLang === 'auto-detect') {
@@ -95,7 +95,7 @@ async function translate(text, from, to, options) {
         
         if (res.ok) {
             let result = '';
-            const decoder = new TextDecoder('utf-8');
+            const decoder = new TextDecoder();
             const rawData = res.rawData;
             
             if (rawData) {
@@ -119,7 +119,8 @@ async function translate(text, from, to, options) {
                                 }
                             }
                         } catch (e) {
-                            // Skip invalid JSON lines
+                            // Skip invalid JSON lines (some lines may be incomplete during streaming)
+                            continue;
                         }
                     }
                 }
