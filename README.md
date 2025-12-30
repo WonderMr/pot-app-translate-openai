@@ -6,7 +6,7 @@ This is an OpenAI translation plugin for [Pot-App](https://pot-app.com/), suppor
 
 ## Features
 
-- **Multiple Model Support**: Choose from GPT-4o, GPT-4o Mini, GPT-4 Turbo, and GPT-3.5 Turbo
+- **Multiple Model Support**: Choose from 14 different OpenAI models including GPT-4o, o1, GPT-4, and GPT-3.5 series
 - **Secure API Key Storage**: Store your OpenAI API key securely
 - **Custom API Endpoint**: Support for custom OpenAI-compatible API endpoints
 - **Streaming Translation**: Real-time streaming of translation results for better user experience
@@ -39,10 +39,24 @@ After installation, configure the plugin with the following settings:
    - The key is stored securely (password field)
 
 2. **Model** (Required): Select the OpenAI model to use
-   - `GPT-4o`: Latest and most capable model
-   - `GPT-4o Mini`: Cost-effective mini version of GPT-4o
-   - `GPT-4 Turbo`: High-performance GPT-4 model
-   - `GPT-3.5 Turbo`: Fast and economical option (default)
+   - **GPT-4o Series**:
+     - `GPT-4o`: Latest and most capable multimodal model
+     - `GPT-4o Mini`: Cost-effective mini version of GPT-4o
+     - `ChatGPT-4o Latest`: Latest ChatGPT-4o model with continuous updates
+   - **GPT-4 Series**:
+     - `GPT-4 Turbo`: High-performance GPT-4 model
+     - `GPT-4 Turbo Preview`: Preview version of GPT-4 Turbo
+     - `GPT-4`: Original GPT-4 model
+     - `GPT-4 0125 Preview`: Specific preview version (2024-01-25)
+     - `GPT-4 1106 Preview`: Specific preview version (2023-11-06)
+   - **GPT-3.5 Series**:
+     - `GPT-3.5 Turbo`: Fast and economical option (default)
+     - `GPT-3.5 Turbo 0125`: Specific version (2024-01-25)
+     - `GPT-3.5 Turbo 1106`: Specific version (2023-11-06)
+   - **o1 Series** (Reasoning models):
+     - `o1`: OpenAI's reasoning model for complex tasks
+     - `o1 Preview`: Preview version of o1
+     - `o1 Mini`: Smaller, faster version of o1
 
 3. **API Endpoint** (Optional): Custom API endpoint
    - Default: `https://api.openai.com`

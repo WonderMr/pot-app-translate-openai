@@ -18,8 +18,18 @@
       "options": {
         "gpt-4o": "GPT-4o",
         "gpt-4o-mini": "GPT-4o Mini",
+        "chatgpt-4o-latest": "ChatGPT-4o Latest",
         "gpt-4-turbo": "GPT-4 Turbo",
-        "gpt-3.5-turbo": "GPT-3.5 Turbo"
+        "gpt-4-turbo-preview": "GPT-4 Turbo Preview",
+        "gpt-4": "GPT-4",
+        "gpt-4-0125-preview": "GPT-4 0125 Preview",
+        "gpt-4-1106-preview": "GPT-4 1106 Preview",
+        "gpt-3.5-turbo": "GPT-3.5 Turbo",
+        "gpt-3.5-turbo-0125": "GPT-3.5 Turbo 0125",
+        "gpt-3.5-turbo-1106": "GPT-3.5 Turbo 1106",
+        "o1": "o1",
+        "o1-preview": "o1 Preview",
+        "o1-mini": "o1 Mini"
       }
     },
     {
